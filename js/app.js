@@ -1,3 +1,4 @@
+import { initLearning } from "./learning.js";
 import { WORDS, TEXTS, LESSONS } from "../data/content.js";
 import { createTest, getMetrics, appendInput, finishTest } from "./typing-engine.js";
 import { loadData, saveData, clearHistory } from "./storage.js";
@@ -304,7 +305,7 @@ function init() {
   $("#typing-area").addEventListener("click", () => $("#typing-area").focus());
   document.addEventListener("keydown", handleKeydown);
   $("#back-to-rush").addEventListener("click", () => setView("rush"));
-  $$(".lesson-card").forEach(button => button.addEventListener("click", () => startLesson(button.dataset.lesson)));
+
   $("#clear-history").addEventListener("click", () => {
     if (!data.history.length) { showToast("Er is nog geen geschiedenis om te wissen."); return; }
     if (confirm("Wis alle opgeslagen voortgang en testgeschiedenis?")) {
@@ -321,6 +322,7 @@ function init() {
   });
   if (data.settings.theme === "light") document.body.classList.add("light-theme");
   renderProgress();
+  initLearning();
   resetTest();
 }
 
