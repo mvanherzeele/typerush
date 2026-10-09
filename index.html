@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101114">
+  <meta name="description" content="TypeRush — train je typesnelheid, nauwkeurigheid en bouw je eigen streak op.">
+  <title>TypeRush — Master the Keyboard</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <script type="module" src="./js/app.js"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="TypeRush home">
+        <span class="brand-mark" aria-hidden="true">⌨</span>
+        <span>Type<span class="brand-accent">Rush</span></span>
+      </a>
+      <nav class="nav-tabs" aria-label="Hoofdnavigatie">
+        <button class="nav-tab active" data-view="rush">⌁ <span>Rush</span></button>
+        <button class="nav-tab" data-view="learn">✳ <span>Learn</span></button>
+        <button class="nav-tab" data-view="progress">◷ <span>Progress</span></button>
+      </nav>
+      <div class="topbar-right">
+        <span class="layout-pill"><span class="status-dot"></span> AZERTY</span>
+        <button class="icon-button" id="theme-toggle" aria-label="Wissel thema" title="Wissel thema">◐</button>
+      </div>
+    </header>
+
+    <main>
+      <section id="rush-view" class="view active">
+        <div class="page-heading">
+          <p class="eyebrow">READY, SET, TYPE</p>
+          <h1>Find your <span class="gradient-text">flow.</span></h1>
+          <p class="subtitle">Een paar minuten oefenen. Een beetje sneller worden. Elke dag opnieuw.</p>
+        </div>
+
+        <div class="mode-toolbar">
+          <div class="segmented" role="group" aria-label="Testduur">
+            <button class="duration-option" data-duration="15">15s</button>
+            <button class="duration-option" data-duration="30">30s</button>
+            <button class="duration-option selected" data-duration="60">60s</button>
+            <button class="duration-option" data-duration="120">120s</button>
+          </div>
+          <div class="mode-select-wrap">
+            <label class="sr-only" for="mode-select">Oefenmodus</label>
+            <select id="mode-select">
+              <option value="words">Willekeurige woorden</option>
+              <option value="quote">Volledige tekst</option>
+            </select>
+            <label class="sr-only" for="language-select">Taal</label>
+            <select id="language-select">
+              <option value="nl">Nederlands</option>
+              <option value="en">English</option>
+              <option value="fr">Français</option>
+            </select>
+          </div>
+        </div>
+
+        <section class="test-card" aria-label="Typetest">
+          <div class="metrics-row">
+            <div class="metric"><span class="metric-label">WPM</span><strong id="live-wpm">0</strong></div>
+            <div class="metric"><span class="metric-label">Nauwkeurigheid</span><strong id="live-accuracy">100<span class="metric-unit">%</span></strong></div>
+            <div class="metric"><span class="metric-label">Tijd</span><strong id="time-left">60<span class="metric-unit">s</span></strong></div>
+            <div class="metric"><span class="metric-label">Fouten</span><strong id="live-errors">0</strong></div>
+          </div>
+
+          <div class="timer-track"><div id="timer-bar" class="timer-fill"></div></div>
+
+          <div id="typing-area" class="typing-area" tabindex="0" role="textbox" aria-label="Typ de getoonde tekst" aria-multiline="true">
+            <div id="prompt-text" class="prompt-text"></div>
+            <span id="caret" class="caret" aria-hidden="true"></span>
+          </div>
+          <p class="typing-hint" id="typing-hint">Begin te typen om de timer te starten <span>·</span> <kbd>Tab</kbd> + <kbd>Enter</kbd> herstart</p>
+
+          <div class="test-actions">
+            <span class="keyboard-note"><span class="keycap">AZ</span> Geoptimaliseerd voor AZERTY</span>
+            <button id="restart-button" class="secondary-button"><span aria-hidden="true">↻</span> Opnieuw starten</button>
+          </div>
+        </section>
+
+        <section id="result-panel" class="result-panel hidden" aria-live="polite">
+          <div class="result-heading">
+            <div><p class="eyebrow">TEST VOLTOOID</p><h2>Nice run.</h2></div>
+            <span class="result-spark" aria-hidden="true">✦</span>
+          </div>
+          <div class="result-grid">
+            <div class="result-stat primary-stat"><span>Typesnelheid</span><strong id="result-wpm">0 <small>WPM</small></strong></div>
+            <div class="result-stat"><span>Nauwkeurigheid</span><strong id="result-accuracy">100%</strong></div>
+            <div class="result-stat"><span>Correcte tekens</span><strong id="result-correct">0</strong></div>
+            <div class="result-stat"><span>Fouten</span><strong id="result-errors">0</strong></div>
+          </div>
+          <div class="result-footer">
+            <p id="personal-best-message">Elke test is een stap vooruit.</p>
+            <button id="result-retry" class="primary-button">Nog een run <span aria-hidden="true">→</span></button>
+          </div>
+        </section>
+
+        <div class="tip-card">
+          <span class="tip-icon">✦</span>
+          <p><strong>Tip:</strong> mik eerst op nauwkeurigheid. Snelheid volgt vanzelf wanneer je vingers de toetsen beter leren vinden.</p>
+        </div>
+      </section>
+
+      <section id="learn-view" class="view">
+        <div class="page-heading compact-heading">
+          <p class="eyebrow">BUILD YOUR SKILLS</p>
+          <h1>Learn by <span class="gradient-text">doing.</span></h1>
+          <p class="subtitle">Kleine oefeningen, betere gewoontes. Kies een oefening om te beginnen.</p>
+        </div>
+        <div class="lesson-grid">
+          <button class="lesson-card" data-lesson="home">
+            <span class="lesson-icon blue">⌘</span><span class="lesson-tag">LEVEL 01</span>
+            <strong>De basis</strong><span>Rustig beginnen met veelgebruikte letters.</span><span class="lesson-bottom">Start les <b>↗</b></span>
+          </button>
+          <button class="lesson-card" data-lesson="words">
+            <span class="lesson-icon purple">Aa</span><span class="lesson-tag">LEVEL 02</span>
+            <strong>Woorden</strong><span>Oefen korte woorden en vloeiende overgangen.</span><span class="lesson-bottom">Start les <b>↗</b></span>
+          </button>
+          <button class="lesson-card" data-lesson="punctuation">
+            <span class="lesson-icon orange">,.</span><span class="lesson-tag">LEVEL 03</span>
+            <strong>Leestekens</strong><span>Train hoofdletters, komma's en punten.</span><span class="lesson-bottom">Start les <b>↗</b></span>
+          </button>
+          <button class="lesson-card" data-lesson="mixed">
+            <span class="lesson-icon green">✳</span><span class="lesson-tag">LEVEL 04</span>
+            <strong>Mix it up</strong><span>Een mix van woorden, cijfers en leestekens.</span><span class="lesson-bottom">Start les <b>↗</b></span>
+          </button>
+        </div>
+        <div class="lesson-note"><span>ⓘ</span><p>De lessen gebruiken een korte test van 30 seconden. Je voortgang wordt lokaal in deze browser bewaard.</p></div>
+        <button id="back-to-rush" class="secondary-button">← Terug naar Rush</button>
+      </section>
+
+      <section id="progress-view" class="view">
+        <div class="page-heading compact-heading">
+          <p class="eyebrow">YOUR JOURNEY</p>
+          <h1>Small steps. <span class="gradient-text">Big progress.</span></h1>
+          <p class="subtitle">Jouw resultaten en persoonlijke records, allemaal op één plek.</p>
+        </div>
+        <div class="progress-overview">
+          <div class="overview-card"><span class="overview-icon">⌁</span><span class="metric-label">Tests voltooid</span><strong id="total-tests">0</strong><span class="overview-caption">Elke poging telt</span></div>
+          <div class="overview-card"><span class="overview-icon">↗</span><span class="metric-label">Beste snelheid</span><strong id="best-wpm">0 <small>WPM</small></strong><span class="overview-caption">Persoonlijk record</span></div>
+          <div class="overview-card"><span class="overview-icon">✦</span><span class="metric-label">Gem. nauwkeurigheid</span><strong id="average-accuracy">—</strong><span class="overview-caption">Over je laatste tests</span></div>
+          <div class="overview-card"><span class="overview-icon">◷</span><span class="metric-label">Oefentijd</span><strong id="practice-time">0m</strong><span class="overview-caption">Tijd geïnvesteerd</span></div>
+        </div>
+        <section class="history-card">
+          <div class="section-title-row"><div><p class="eyebrow">RECENT ACTIVITY</p><h2>Je laatste tests</h2></div><button id="clear-history" class="text-button">Wis geschiedenis</button></div>
+          <div id="history-list" class="history-list"><div class="empty-state">Nog geen tests. Je eerste run wacht op je.</div></div>
+        </section>
+        <section class="achievements-card">
+          <div class="section-title-row"><div><p class="eyebrow">KEEP GOING</p><h2>Achievements</h2></div><span id="achievement-count" class="achievement-count">0 / 4</span></div>
+          <div class="achievement-grid" id="achievement-grid"></div>
+        </section>
+      </section>
+    </main>
+
+    <footer class="footer"><span>TypeRush <span class="footer-dot">·</span> v0.1</span><span>Made to get a little better every day.</span></footer>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  </div>
+</body>
+</html>
